@@ -21,6 +21,15 @@ class HomeController {
     );
   }
 
+  void removerJogador(Jogador jogador) {
+    jogadores.remove(jogador);
+   // quando remove um  jogador ele limpa os times e o banco para que seja necessário gerar novamente
+    times = [];
+    banco = [];
+    balanceamento = 0;
+
+  }
+
   void gerarTimes(int jogadoresPorTime) {
     final resultado = BalanceadorService.gerarTimes(
       jogadores: jogadores,

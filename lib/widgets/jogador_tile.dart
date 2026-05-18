@@ -3,20 +3,33 @@ import 'package:flutter/material.dart';
 import '../models/jogador.dart';
 import 'estrelas_widget.dart';
 
-// Widget para exibir as informações de um jogador em uma lista, mostrando o nome e as estrelas de habilidade
 class JogadorTile extends StatelessWidget {
   final Jogador jogador;
+  final VoidCallback? onRemover; // <-- NOVO PARÂMETRO
 
-  const JogadorTile({super.key, required this.jogador});
+  const JogadorTile({
+    super.key,
+    required this.jogador,
+    this.onRemover, // <-- NOVO
+  });
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       leading: const Icon(Icons.person),
-
       title: Text(jogador.nome),
-
-      trailing: EstrelasWidget(valor: jogador.nivel),
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          EstrelasWidget(valor: jogador.nivel),
+          if (onRemover != null) // <-- NOVO: só mostra se tiver callback
+            IconButton(
+              icon: const Icon(Icons.delete_outline, color: Colors.red),
+              tooltip: 'Remover jogador',
+              onPressed: onRemover,
+            ),
+        ],
+      ),
     );
   }
 }

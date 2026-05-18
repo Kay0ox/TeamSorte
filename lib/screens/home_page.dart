@@ -216,7 +216,14 @@ class _HomePageState extends State<HomePage> {
                   const SizedBox(height: 10),
 
                   ...controller.jogadores.map(
-                    (jogador) => JogadorTile(jogador: jogador),
+                    (jogador) => JogadorTile(
+                      jogador: jogador,
+                      onRemover: () {
+                        setState(() {
+                          controller.removerJogador(jogador);
+                        });
+                      },
+                    ),
                   ),
 
                   const SizedBox(height: 15),
